@@ -1,0 +1,222 @@
+Distrubution & Kernel
+
+Check current distribution
+
+lsb_release -c
+
+Check current kernel
+
+uname -r
+
+Kontrollera checksum på filer
+
+cksfv -g
+
+System Monitor
+
+View cpu/memory usage and processes
+
+htop top
+
+CPU Temperature
+
+sensors | grep "Core"
+
+Filesystem/disks
+
+df
+
+Users & Groups
+
+List all users on the system.
+
+cat /etc/passwd
+
+List all users on the system.
+
+lastlog
+
+Show processes
+
+All
+
+ps ux
+
+Process that runs on certain port
+
+sudo netstat -tulpn | grep :
+
+Kill processes
+
+xkill
+
+To end a process, enter
+
+$ kill -s 15
+
+OR send signal 9 (SIGKILL) which is used for forced
+
+$ kill -9
+
+Restart specific processes
+
+Sound (reload)
+
+sudo /sbin/alsa force-reload
+
+Sound (kill)
+
+pulseaudio -k
+
+Apache (restart)
+
+sudo /etc/init.d/apache2 restart
+
+Network (restart)
+
+service network-manager restart
+
+VPN Desktop Server
+
+sudo x11vnc -usepw -ssl
+
+Searching for files / text-strings
+
+text in files:
+
+grep -r
+
+files:
+
+locate
+
+find -name
+
+Cronjob (CRONTAB)
+
+sudo crontab -e
+
+example, every hour:
+
+0 * * * * sudo /etc/init.d/noip2 start
+
+example, every 15 minutes:
+
+*/15 * * * * sudo /etc/init.d/noip2 start
+
+FTP
+
+http://www.debuntu.org/how-to-ftp-virtual-host-with-proftpd-and-mysql/
+
+Start FTP:
+
+sudo service proftpd start
+
+MY OLD FTP SETTINGS:
+
+/etc/vsftpd.conf __Config fil för ftp
+
+/etc/vsftpd.chroot_list __Config fil för chroot users
+
+/etc/pam.d/vsftpd __Config fil för PAM FTP
+
+sudo service vsftpd restart __Restart ftp
+
+Network Services
+
+Manage network interfaces
+
+sudo gedit /etc/network/interfaces
+
+Turn off wlan network
+
+iface wlan0 inet manual
+
+Rights in files/folders (CHMOD)
+
+Allow rights to all
+
+chmod 0777
+
+TODO.. add more examples..
+
+Counter-Strike server
+
+http://www.adminmod.org/help/online/Admin_Mod_Reference/Admin_Mod_Commands.htm
+
+http://www.counter-strike.com/commands/
+
+http://gamerone.net/topic/1514-how-to-install-a-cs-16-2013-server-with-steamcmd-on-linux-debian/
+/hlds_run -console -game cstrike +port 27015 +maxplayers 24 -pingboost 3 +sys_ticrate 1000 +heapsize 250000
+
+Multiple window instances
+
+Start new screen
+
+screen -S
+
+Open screen
+
+screen -r
+
+List all screens
+
+screen -ls
+
+Leave screen
+
+ctrl+A+D
+
+Remove spam from unity-list
+
+sudo apt-get autoremove unity-lens-shopping; sudo apt-get autoremove unity-lens-music; sudo apt-get autoremove unity-lens-photos; sudo apt-get autoremove unity-lens-gwibber; sudo apt-get autoremove unity-lens-video
+
+Move window 'close' 'minimize' to right side
+
+gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
+
+Change colour on the console
+
+http://www.kirsle.net/wizards/ps1.html
+Paste the following output into your ~/.bashrc or equivalent file:
+
+export PS1="[$(tput bold)][$(tput setaf 1)]\u[$(tput setaf 1)]@[$(tput setaf 4)]\h:\w[$(tput setaf 6)]\$ [$(tput sgr0)]"
+
+Remove old kernels from /boot
+
+http://tuxtweaks.com/2010/10/remove-old-kernels-in-ubuntu-with-one-command/
+Kolla vilken Kernel som körs
+
+uname -r
+
+Kolla vilka kernels som finns installerade på systemet
+
+dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e uname -r | cut -f1,2 -d"-"
+
+Ta bort kernels(image/headers) som inte används (OSKARPT-LÄGE)
+
+dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e uname -r | cut -f1,2 -d"-" | grep -e [0-9] | grep -E "(image| headers)" | xargs sudo apt-get --dry-run remove
+
+Ta bort kernels(image/headers) som inte används (SKARPT-LÄGE)
+
+dpkg -l linux-* | awk '/^ii/{ print $2}' | grep -v -e uname -r | cut -f1,2 -d"-" | grep -e [0-9] | grep -E "(image|headers)" | xargs sudo apt-get -y purge
+
+Mount ISO, harddrives etc.
+
+To Mount To mount the image to a directory is a simple two step procedure. Sudo is required because we are working in directories owned by root. First make a directory with a name that identifies the contents of the ISO, usually its name.
+
+sudo mkdir /media/example
+
+Then mount the file with the following command to the newly created directory. In the following example, it is assumed that NameOfISO.iso is in the users working directory, if not replace with the absolute path to the file.
+
+sudo mount -o loop example.iso /media/example
+
+To mount the image so that it can be written to, use the following mount command instead:
+
+sudo mount -o rw,loop example.iso /media/example
+
+To Unmount Umounting media is simply the reverse. First unmount the image, then remove the directory it was mounted to. Unmounting is universal, it doesn't matter what image was mounted it can be unmounted this way.
+
+sudo umount /media/example
+
+sudo rmdir /media/example
